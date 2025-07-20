@@ -32,7 +32,7 @@ GuardDuty is a threat detection service. In this project, it will pick up on and
 
 ## SQL Injection
 
-The first attack I performed on the web app was SQL injection, which means I inserted a malicious SQL code string into the SQL database to change how to database works. SQL injection is a security risk because it can allow attackers to steal information from a database or even delete the database, depending on the attack.
+The first attack I performed on the web app was SQL injection, which means I inserted a malicious SQL code string into the text field to change how the database works. SQL injection is a security risk because it can allow attackers to steal information from a database or even delete the database, depending on the attack.
 
 My SQL injection attack involved entering the string ' or 1=1;-- into the email text box. This means that I can skip the authentication section for this login.
 
@@ -76,7 +76,7 @@ After performing the attack, GuardDuty reported a finding within a few minutes o
 
 GuardDuty's finding was called "UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.InsideAWS". This means that someone was able to get access to our AWS environment and steal data.
 
-GuardDuty's detailed finding reported that the attacker logged in using our account credentials, retrieved information from our S3 bucket using the GetObject API.
+GuardDuty's detailed finding reported that the attacker logged in using our account credentials, and retrieved information from our S3 bucket using the GetObject API.
 
 ![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-guardduty_v1w2x3y4)
 
