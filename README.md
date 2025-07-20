@@ -9,14 +9,16 @@ These projects were completed as part of my self-guided learning to build hands-
 
 This repository contains the following cloud security projects:
 
-* **[Build a Security Monitoring System](./Project-1-Security-Monitoring-System/README.md)**
+* **[Build a Security Monitoring System](Security-Monitoring-System)**
     * Demonstrates setting up proactive monitoring and alerting for sensitive data access using AWS CloudTrail, CloudWatch, and SNS.
-* **[Threat Detection with GuardDuty](./Project-2-GuardDuty-Threat-Detection/README.md)**
+* **[Threat Detection with GuardDuty](Threat-Detection)**
     * Explores identifying and analyzing web vulnerabilities and detecting threats using Amazon GuardDuty against a deployed vulnerable application.
-* **[Secure Secrets with Secrets Manager](./Project-3-Secrets-Manager/README.md)**
+* **[Secure Secrets with Secrets Manager](Secure-Secrets)**
     * Focuses on implementing secure credential management practices by integrating a web application with AWS Secrets Manager and showcasing GitHub's secret scanning.
 * **[Encrypt Data with AWS KMS](Encrypt-Data)**
     * Illustrates the fundamental concept of data at rest encryption by creating and using AWS KMS keys to secure a DynamoDB database.
+* **[Cloud Security with AWS IAN](Security-with-AWS-IAM)**
+    * Enforces the concept of Least Privelage by using AWS IAM users, groups, and roles, to configure access to resources.
 
 ---
 ### Technologies & Services Used
