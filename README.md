@@ -15,7 +15,7 @@ This repository contains the following cloud security projects:
     * Explores identifying and analyzing web vulnerabilities and detecting threats using Amazon GuardDuty against a deployed vulnerable application.
 * **[Secure Secrets with Secrets Manager](./Project-3-Secrets-Manager/README.md)**
     * Focuses on implementing secure credential management practices by integrating a web application with AWS Secrets Manager and showcasing GitHub's secret scanning.
-* **[Encrypt Data with AWS KMS](./Project-4-KMS-Data-Encryption/README.md)**
+* **[Encrypt Data with AWS KMS](Encrypt-Data)**
     * Illustrates the fundamental concept of data at rest encryption by creating and using AWS KMS keys to secure a DynamoDB database.
 
 ---
