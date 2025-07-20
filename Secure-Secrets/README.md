@@ -31,9 +31,6 @@ I've set up the initial configuration by hardcoding the AWS access key, AWS secr
 
 ---
 
-## Using my own AWS credentials
-
----
 
 ## Pushing Insecure Code to GitHub
 
@@ -53,7 +50,7 @@ Secrets Manager is a service that securely maintains authentication keys for a v
 
 Another feature in Secrets Manager is secrets rotation. Secrets rotation is the process of changing the secrets after a specified amount of time has passed. It's useful in situations where you want to make an object as secure as possible. If my AWS credentials got compromised by a hacker, after the secrets are rotated, the hacker will no longer have access.
 
-Secrets Manager provides sample code in various languages, like Java, Python, JavaScript, and C#. This is helpful because it makes it shows how to write the code to access the credentials.
+Secrets Manager provides sample code in various languages, like Java, Python, JavaScript, and C#. This is helpful because it shows how to write the code to access the credentials.
 
 ![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-secretsmanager_h2i3j4k5)
 
@@ -63,7 +60,7 @@ Secrets Manager provides sample code in various languages, like Java, Python, Ja
 
 I updated the config.py file to retrieve the secret keys from SecretsManager. The get_secret() function will connect the code to SecretsManager by using a session client.
 
-I also added code to config.py to extract the AWS credentials from SecretsManager. This is important because if the app.py file uses these credentials to function properly, without it the web app will fail.
+I also added code to config.py to extract the AWS credentials from SecretsManager. This is important because the app.py file uses these credentials to function properly, without it the web app will fail.
 
 ![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-secretsmanager_v0w1x2y3)
 
