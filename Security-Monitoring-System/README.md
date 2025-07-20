@@ -79,7 +79,7 @@ AWS requires email confirmation because they want to make sure their sending mes
 
 To test my monitoring system, I exposed my secret value and waited for an alert message from CloudWatch. The results were that I got no message from CloudWatch, which indicates that my alert wasn't configured properly.
 
-When troubleshooting the notification issues, I first checked to see if CloudTrail was logging events properly. Next, I checked to make sure CloudTrail was sending logs to CloudWatch. Third, I checked that the metric filter was properly filtering events. Finally, I checked the CloudWatch metric configurations and saw that the statistic was set to Average and not Sum. \
+When troubleshooting the notification issues, I first checked to see if CloudTrail was logging events properly. Next, I checked to make sure CloudTrail was sending logs to CloudWatch. Third, I checked that the metric filter was properly filtering events. Finally, I checked the CloudWatch metric configurations and saw that the statistic was set to Average and not Sum. 
 
 I initially didn't receive an email before because my CloudWatch metric threshold was set to Average and not Sum. This meant that for my alert to be triggered, the threshold would have to be passed multiple times just for it to send one alarm. Setting it to Sum means that it would add every count of the secret being exposed.
 
