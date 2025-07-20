@@ -1,108 +1,95 @@
 
-# Build a Security Monitoring System
+# Threat Detection with GuardDuty
 
----
-
-![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-monitoring_reghtjy)
 
 ---
 
 ## Introducing Today's Project!
 
-In this project, I will create a secrets monitoring system to check for any potential intrusions into my account and alert me if it finds anything. To do this project I'm going to use a combination of tools consisting of, AWS S3, SecrestManager, CloudWatch, CloudTrail, CLI, and SNS
-
 ### Tools and concepts
 
-Services I used were SecretsManager, CloudTrail, CloudWatch, and SNS. Key concepts I learnt include how to monitor logs using CloudTrail and CloudWatch, how to create metrics using CloudWatch, how to create alarms and send notifications using CloudWatch alarms, and SNS.
+The services I used were CloudFormation, CloudShell, and GuardDuty. Key concepts I learnt include how to launch a web application using CloudFormation, how to do penetration testing for vulnerabilities, and how to configure GuardDuty to check for malware uploaded to an S3 bucket.
 
 ### Project reflection
 
-This project took me approximately two hours to do. The most challenging part was configuring the CloudWatch metric. It was most rewarding to see the successful notifications sent to my email.
+This project took me approximately two hours to complete. The most challenging part was figuring out how to get the EICAR test file past my antivirus. It was most rewarding to see GuardDuty successfully detect the malicious file.
+
+I did this project today to learn more about cloud security. This project is helping me in my goal to become a cloud security engineer.
 
 ---
 
-## Create a Secret
+## Project Setup
 
-Secrets Manager is a service that securely stores sensitive information, such as login credentials, API keys, security tokens, or database passwords. 
+To set up for this project, I deployed a CloudFormation template that launches a web app that is purposely vulnerable. The three main components are the web app infrastructure, the S3 bucket, and GuardDuty.
 
-To set up for my project, I created a secret called "TopSecretInfo" that contains a key and value that I created to act as sensitive data.
+The web app deployed is called OWSAP Juice Shop. To practice my GuardDuty skills, I will attack the web application to generate alerts from GuardDuty. Then, I will use these alerts to fix the vulnerabilities within the application.
 
-![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-monitoring_o5p6q7r8)
+GuardDuty is a threat detection service. In this project, it will pick up on and report indicators of attack and alert me.
 
----
-
-## Set Up CloudTrail
-
-CloudTrail is a security monitoring service that tracks activity on your account, including the actions taken and who accessed specific resources. I set up CloudTrail to monitor my secret and output the logs into an S3 bucket.
-
-CloudTrail events include types like management events, admin actions like creating or deleting resources. Data events, the operations conducted by resources like S3 or Lambda. Insight events, unusual actions taken in the environment. Network events, track network activity.
-
-### Read vs Write Activity
-
-Read API activity involves simply looking at the secret, but not changing or viewing it. Write API activity involves changes made to the secret or any API calls to view that data. For this project, we need both "Read" and "Write" to properly monitor my resource.
+![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-guardduty_n1o2p3q4)
 
 ---
 
-## Verifying CloudTrail
+## SQL Injection
 
-I retrieved the secret in two ways: First, by going to SecretsManager and using the interface to reveal it. Second, using the AWS CloudShell CLI and running a command to see the secret.
+The first attack I performed on the web app was SQL injection, which means I inserted a malicious SQL code string into the SQL database to change how to database works. SQL injection is a security risk because it can allow attackers to steal information from a database or even delete the database, depending on the attack.
 
-To analyze my CloudTrail events, I visited the CloudTrail event logs and searched for "Event source", "secretsmanager.amazonaws.com". I found my three attempts to access the secret at the top of the list. This tells me that CloudTrails is successfully logging my actions.
+My SQL injection attack involved entering the string ' or 1=1;-- into the email text box. This means that I can skip the authentication section for this login.
 
-![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-monitoring_s8t9u0v1)
-
----
-
-## CloudWatch Metrics
-
-CloudWatch Logs is a service that logs data from a variety of resources across the AWS environment. It's important for monitoring because it can alert you to intrusions, bugs, or crashes by setting up automatic alerts in case of an event.
-
-CloudTrail's Event History is useful for logging and finding logs on one specific event or resource quickly. CloudWatch logs are better for finding data about events across the entire AWS environment.
-
-A CloudWatch metric is a program that will take an action when its event case is triggered. When setting up a metric, the metric value represents the amount that the metric will increase in count if it is triggered. The default value is used when the metric is not triggered.
-
-![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-monitoring_a9b0c1d2)
+![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-guardduty_h1i2j3k4)
 
 ---
 
-## CloudWatch Alarm
+## Command Injection
 
-A CloudWatch alarm is a system that you set the baseline for activity in your environment, either through static or anomaly-based detection. I set my CloudWatch alarm threshold to greater/equal to 1, so the alarm will trigger when someone accesses my secret.
+Next, I used command injection, which is when you enter a script into a text field and the program runs that script when it isn't supposed to. The Juice Shop web app is vulnerable to this because it does not sanitize user input in the text fields.
 
-I created an SNS topic along the way. An SNS topic is a simple notification service that is used to send messages to people through email or text messages. My SNS topic is set up to send a notification to my email whenever the threshold limit is triggered.
+To run command injection, I inserted a JS script into the username text field and clicked Set username. The script will tell the computer to go to the EC2 instance metadata and retrieve the AWS credentials, then it will make those credentials public for anyone to find and view.
 
-AWS requires email confirmation because they want to make sure their sending messages to the correct email. This helps prevent confusion resulting from typos.
-
-![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-monitoring_fsdghstt)
+![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-guardduty_t3u4v5w6)
 
 ---
 
-## Troubleshooting Notification Errors
+## Attack Verification
 
-To test my monitoring system, I exposed my secret value and waited for an alert message from CloudWatch. The results were that I got no message from CloudWatch, which indicates that my alert wasn't configured properly.
+To verify the attack's success, I went to this URL "https://d1af7hm1ji58nx.cloudfront.net/assets/public/credentials.json". This URL page shows me the credentials for the AWS environment that I stole using the script.
 
-When troubleshooting the notification issues, I first checked to see if CloudTrail was logging events properly. Next, I checked to make sure CloudTrail was sending logs to CloudWatch. Third, I checked that the metric filter was properly filtering events. Finally, I checked the CloudWatch metric configurations and saw that the statistic was set to Average and not Sum. \
-
-I initially didn't receive an email before because my CloudWatch metric threshold was set to Average and not Sum. This meant that for my alert to be triggered, the threshold would have to be passed multiple times just for it to send one alarm. Setting it to Sum means that it would add every count of the secret being exposed.
+![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-guardduty_x7y8z9a0)
 
 ---
 
-## Success!
+## Using CloudShell for Advanced Attacks
 
-To validate that CloudWatch metrics were successfully sending alerts. I checked my CloudWatch alerts tab to see if the alert was in alarm mode. I received an email notification that my secret had been accessed.
+The attack continues in CloudShell because I want to simulate what an actual attacker would do in this circumstance, since I have ownership of the AWS environment.
 
-![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-monitoring_ageraergearge)
+In CloudShell, I used wget to download the credentials.json file. Next, I ran a command using cat and jq to output the contents of the file into the terminal.
+
+I then set up a profile, called "stolen" to access the AWS environment. I had to create a new profile because AWS automatically assigns your profile to the CLI profile. This means GuardDuty won't send any alerts because it thinks it's me doing the actions.
+
+![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-guardduty_j9k0l1m2)
+
+---
+
+## GuardDuty's Findings
+
+After performing the attack, GuardDuty reported a finding within a few minutes of the attack. Findings are reports of suspicious activity that takes place in your AWS environment.
+
+GuardDuty's finding was called "UnauthorizedAccess:IAMUser/InstanceCredentialExfiltration.InsideAWS". This means that someone was able to get access to our AWS environment and steal data.
+
+GuardDuty's detailed finding reported that the attacker logged in using our account credentials, retrieved information from our S3 bucket using the GetObject API.
+
+![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-guardduty_v1w2x3y4)
 
 ---
 
-## Comparing CloudWatch with CloudTrail Notifications
+## Extra: Malware Protection
 
-In a project extension, I updated my CloudTrail configurations to also send me SNS messages. I did this because I wanted to compare the alerts sent from CloudTrail and the alerts sent from CloudWatch to see what information is sent, how quickly, and the relevancy. 
+For my project extension, I enabled Malware Protection for S3, which will allow GuardDuty to scan and check for malicious files and stop them before they can harm the product. Malware is code or scripts whose purpose is to cause harm to the computer or service it's sent to.
 
-After enabling CloudTrail SNS notifications, my inbox was flooded with notifications describing multiple actions that were taken in my environment. In terms of the usefulness of these emails, I thought they were irrelevant and difficult to understand.
+To test Malware Protection, I uploaded an EICAR test malware file to my S3 bucket. The uploaded file won't actually cause damage because it has no malware inside of it; it just tricks software into thinking it's malware.
 
-![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-monitoring_d7e8f9g0)
+Once I uploaded the file, GuardDuty instantly triggered that it had scanned a malicious file uploaded to my S3 bucket object. This verified that GuardDuty is capable of detecting malware and sending out alerts within minutes.
 
----
+![Image](http://learn.nextwork.org/intense_azure_festive_sow/uploads/aws-security-guardduty_sm42x3y4)
 
 ---
