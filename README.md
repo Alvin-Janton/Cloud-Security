@@ -26,5 +26,19 @@ This repository contains the following cloud security projects:
 * **Concepts:** Data Encryption, Threat Detection, Security Monitoring, Secrets Management, Network Security, Access Control, Incident Response
 
 ---
+## Learning Objectives
+
+- Practice secure key and secrets management in cloud environments
+- Detect, investigate, and respond to simulated attacks using GuardDuty
+- Set up alerting and monitoring pipelines with CloudTrail and CloudWatch
+- Explore real-world use cases for IAM and role-based access control
+
+---
+### How to Explore
+
+Each project has its own dedicated folder containing a detailed `README.md` with an architecture diagram, specific technologies used, key security concepts demonstrated, and steps taken. Feel free to explore them!
+
+---
+
 
 
