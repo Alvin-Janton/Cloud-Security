@@ -17,7 +17,7 @@ This repository contains the following cloud security projects:
     * Focuses on implementing secure credential management practices by integrating a web application with AWS Secrets Manager and showcasing GitHub's secret scanning.
 * **[Encrypt Data with AWS KMS](Encrypt-Data)**
     * Illustrates the fundamental concept of data at rest encryption by creating and using AWS KMS keys to secure a DynamoDB database.
-* **[Cloud Security with AWS IAN](Security-with-AWS-IAM)**
+* **[Cloud Security with AWS IAM](Security-with-AWS-IAM)**
     * Enforces the concept of Least Privelage by using AWS IAM users, groups, and roles, to configure access to resources.
 
 ---
